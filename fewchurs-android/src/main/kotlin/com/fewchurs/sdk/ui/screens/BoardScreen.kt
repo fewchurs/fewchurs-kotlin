@@ -130,6 +130,7 @@ internal fun BoardScreen(
                     PrimaryTabRow(
                         selectedTabIndex = viewModel.tabs.indexOf(tab),
                         containerColor = FewchursTheme.colors.background,
+                        divider = {},
                     ) {
                         viewModel.tabs.forEach { t ->
                             Tab(

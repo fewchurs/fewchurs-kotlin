@@ -1,9 +1,7 @@
 package com.fewchurs.sdk.ui.components
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,7 +61,7 @@ public data class FeatureCardActions(
 @Composable
 public fun VoteButton(state: VoteButtonState, modifier: Modifier = Modifier) {
     val colors = FewchursTheme.colors
-    val container by animateColorAsState(if (state.voted) colors.primary else colors.background, label = "voteContainer")
+    val container by animateColorAsState(if (state.voted) colors.primary else colors.primary.copy(alpha = 0.08f), label = "voteContainer")
     val content by animateColorAsState(if (state.voted) colors.onPrimary else colors.onSurface, label = "voteContent")
     val description = stringResource(R.string.fewchurs_vote_description) +
         (if (state.hideCount) "" else ". " + pluralStringResource(R.plurals.fewchurs_votes, state.count, state.count))
@@ -73,7 +71,6 @@ public fun VoteButton(state: VoteButtonState, modifier: Modifier = Modifier) {
             .defaultMinSize(minWidth = 48.dp, minHeight = 56.dp)
             .clip(FewchursTheme.shapes.button)
             .background(container)
-            .border(BorderStroke(1.dp, if (state.voted) colors.primary else colors.border), FewchursTheme.shapes.button)
             .clickable(role = Role.Button, onClick = state.onToggle)
             .semantics(mergeDescendants = true) {
                 contentDescription = description
@@ -122,7 +119,6 @@ public fun FeatureCard(
         shape = FewchursTheme.shapes.card,
         color = colors.surface,
         contentColor = colors.onSurface,
-        border = BorderStroke(1.dp, colors.border),
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(Modifier.padding(spacing.cardPadding), horizontalArrangement = Arrangement.spacedBy(spacing.cardPadding)) {
@@ -185,7 +181,7 @@ public fun PoweredByBadge(modifier: Modifier = Modifier) {
 internal fun SkeletonCard() {
     val colors = FewchursTheme.colors
     val block = colors.muted.copy(alpha = 0.12f)
-    Surface(shape = FewchursTheme.shapes.card, color = colors.surface, border = BorderStroke(1.dp, colors.border)) {
+    Surface(shape = FewchursTheme.shapes.card, color = colors.surface) {
         Row(Modifier.fillMaxWidth().padding(FewchursTheme.spacing.cardPadding), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Box(Modifier.size(48.dp, 56.dp).clip(FewchursTheme.shapes.button).background(block))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {

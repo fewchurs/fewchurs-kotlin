@@ -22,7 +22,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -44,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fewchurs.sdk.model.FeatureValidation
 import com.fewchurs.sdk.ui.R
+import com.fewchurs.sdk.ui.components.FewchursTextField
 import com.fewchurs.sdk.ui.config.EmailField
 import com.fewchurs.sdk.ui.config.UiConfig
 import com.fewchurs.sdk.ui.internal.text
@@ -101,7 +101,7 @@ internal fun SubmitScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             val titleTooShort = title.isNotEmpty() && title.trim().length < FeatureValidation.TITLE_MIN
-            OutlinedTextField(
+            FewchursTextField(
                 value = title,
                 onValueChange = viewModel::setTitle,
                 label = { Text(stringResource(R.string.fewchurs_title_label)) },
@@ -118,7 +118,7 @@ internal fun SubmitScreen(
                 shape = FewchursTheme.shapes.button,
                 modifier = Modifier.fillMaxWidth(),
             )
-            OutlinedTextField(
+            FewchursTextField(
                 value = description,
                 onValueChange = viewModel::setDescription,
                 label = { Text(stringResource(R.string.fewchurs_description_label)) },
@@ -131,7 +131,7 @@ internal fun SubmitScreen(
             )
             if (emailField != EmailField.Hidden) {
                 val invalid = email.isNotEmpty() && !viewModel.isEmailValid(email)
-                OutlinedTextField(
+                FewchursTextField(
                     value = email,
                     onValueChange = viewModel::setEmail,
                     label = {

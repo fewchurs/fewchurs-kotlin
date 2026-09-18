@@ -1,6 +1,5 @@
 package com.fewchurs.sdk.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,11 +29,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -65,6 +61,7 @@ import com.fewchurs.sdk.model.Feature
 import com.fewchurs.sdk.model.FeatureValidation
 import com.fewchurs.sdk.state.CommentsUiState
 import com.fewchurs.sdk.ui.R
+import com.fewchurs.sdk.ui.components.FewchursTextField
 import com.fewchurs.sdk.ui.components.FeatureMeta
 import com.fewchurs.sdk.ui.components.MessageState
 import com.fewchurs.sdk.ui.components.VoteButton
@@ -215,7 +212,7 @@ private fun DetailContent(
                         )
                     }
                 }
-                HorizontalDivider(color = colors.border, modifier = Modifier.padding(top = 8.dp))
+                Spacer(Modifier.height(4.dp))
                 Text(
                     stringResource(R.string.fewchurs_comments_title),
                     style = FewchursTheme.typography.title,
@@ -271,11 +268,7 @@ private fun FollowButton(following: Boolean, pending: Boolean, onClick: () -> Un
         Spacer(Modifier.size(8.dp))
         Text(stringResource(if (following) R.string.fewchurs_following else R.string.fewchurs_follow))
     }
-    if (following) {
-        FilledTonalButton(onClick = onClick, enabled = !pending, shape = FewchursTheme.shapes.button) { content() }
-    } else {
-        OutlinedButton(onClick = onClick, enabled = !pending, shape = FewchursTheme.shapes.button) { content() }
-    }
+    FilledTonalButton(onClick = onClick, enabled = !pending, shape = FewchursTheme.shapes.button) { content() }
 }
 
 @Composable
@@ -283,8 +276,7 @@ private fun CommentRow(comment: Comment) {
     val colors = FewchursTheme.colors
     Surface(
         shape = FewchursTheme.shapes.card,
-        color = if (comment.isDeveloper) colors.primary.copy(alpha = 0.06f) else colors.surface,
-        border = BorderStroke(1.dp, if (comment.isDeveloper) colors.primary.copy(alpha = 0.4f) else colors.border),
+        color = if (comment.isDeveloper) colors.primary.copy(alpha = 0.08f) else colors.surface,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(Modifier.padding(FewchursTheme.spacing.cardPadding), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -328,9 +320,8 @@ private fun Composer(
             Modifier.navigationBarsPadding().imePadding().padding(horizontal = FewchursTheme.spacing.screen, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            HorizontalDivider(color = colors.border)
             if (text.isNotEmpty()) {
-                OutlinedTextField(
+                FewchursTextField(
                     value = name,
                     onValueChange = onNameChange,
                     placeholder = { Text(stringResource(R.string.fewchurs_name_hint)) },
@@ -340,7 +331,7 @@ private fun Composer(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(
+                FewchursTextField(
                     value = text,
                     onValueChange = onTextChange,
                     placeholder = { Text(stringResource(R.string.fewchurs_comment_hint)) },
@@ -380,7 +371,7 @@ private fun EmailDialog(initial: String, onDismiss: () -> Unit, onConfirm: (Stri
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(text(UiConfig.strings.followDialogMessage, R.string.fewchurs_follow_dialog_message))
-                OutlinedTextField(
+                FewchursTextField(
                     value = email,
                     onValueChange = { email = it.trim() },
                     label = { Text(stringResource(R.string.fewchurs_email_label)) },
