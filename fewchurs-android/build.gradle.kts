@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -34,10 +36,22 @@ kotlin {
 }
 
 mavenPublishing {
+    // AGP's built-in javadoc (an old Dokka) can't read the sealed classes in fewchurs-core,
+    // so publish an empty javadoc jar instead. Maven Central only needs one to exist, and IDEs
+    // show the KDoc from the sources jar.
+    configure(AndroidSingleVariantLibrary(variant = "release", sourcesJar = true, publishJavadocJar = false))
     pom {
         name.set("Fewchurs Android")
         description.set("Ready-made Jetpack Compose feature-request board for Fewchurs.")
     }
+}
+
+val emptyJavadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
+
+extensions.configure<PublishingExtension> {
+    publications.withType<MavenPublication>().configureEach { artifact(emptyJavadocJar) }
 }
 
 dependencies {
