@@ -58,6 +58,6 @@ public class FewchursConfig internal constructor(
     }
 
     public companion object {
-        public const val DEFAULT_BASE_URL: String = "https://fewchurs.com/api/v1"
+        public const val DEFAULT_BASE_URL: String = "https://www.fewchurs.shop/api/v1"
     }
 }

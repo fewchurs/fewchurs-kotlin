@@ -157,4 +157,8 @@ class FewchursApiTest {
         assertEquals(0L, IsoDate.parse("yesterday"))
         assertEquals(0L, IsoDate.parse(null))
     }
+
+    @Test fun `default base URL is the production API`() {
+        assertEquals("https://www.fewchurs.shop/api/v1", FewchursConfig.DEFAULT_BASE_URL)
+    }
 }

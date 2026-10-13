@@ -6,9 +6,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
-// Put your real key in local.properties to test against fewchurs.com:
+// Put your real key in local.properties to test against fewchurs.shop:
 //   fewchurs.apiKey=fr_live_xxx
-//   fewchurs.baseUrl=https://fewchurs.com/api/v1
+//   fewchurs.baseUrl=https://www.fewchurs.shop/api/v1
 // Without it the sample talks to the local mock server (tools/mock-server).
 val localProps = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }

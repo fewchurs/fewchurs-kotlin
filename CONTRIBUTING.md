@@ -67,7 +67,7 @@ In `local.properties`, which isn't committed:
 
 ```
 fewchurs.apiKey=fr_live_xxx
-fewchurs.baseUrl=https://fewchurs.com/api/v1
+fewchurs.baseUrl=https://www.fewchurs.shop/api/v1
 ```
 
 For a local Next.js dev server, use `http://10.0.2.2:3000/api/v1`. Reinstall the sample after changing these values.
