@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.maven.publish)
 }
 
 android {
@@ -29,6 +30,13 @@ kotlin {
             "com.fewchurs.sdk.FewchursInternalApi",
             "androidx.compose.material3.ExperimentalMaterial3Api",
         )
+    }
+}
+
+mavenPublishing {
+    pom {
+        name.set("Fewchurs Android")
+        description.set("Ready-made Jetpack Compose feature-request board for Fewchurs.")
     }
 }
 

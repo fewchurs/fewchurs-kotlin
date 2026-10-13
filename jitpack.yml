@@ -1,0 +1,4 @@
+jdk:
+  - openjdk17
+install:
+  - ./gradlew :fewchurs-core:publishToMavenLocal :fewchurs-android:publishToMavenLocal -x test

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.maven.publish)
 }
 
 android {
@@ -28,6 +29,13 @@ kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         optIn.add("com.fewchurs.sdk.FewchursInternalApi")
+    }
+}
+
+mavenPublishing {
+    pom {
+        name.set("Fewchurs Core")
+        description.set("API client, repository and headless state for Fewchurs feature-request boards.")
     }
 }
 

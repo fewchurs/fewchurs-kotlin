@@ -145,7 +145,7 @@ public object Fewchurs {
         try {
             context.startActivity(intent)
         } catch (e: android.content.ActivityNotFoundException) {
-            Logger(LogLevel.Error).error("Fewchurs.showBoard needs the com.fewchurs:fewchurs-android dependency.", e)
+            Logger(LogLevel.Error).error("Fewchurs.showBoard needs the fewchurs-android dependency.", e)
         }
     }
 
