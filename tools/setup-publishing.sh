@@ -26,7 +26,7 @@ FPR=$(gpg --list-secret-keys --with-colons "$KEY_NAME" | awk -F: '/^fpr/ {print 
 KEY_ID=${FPR: -8}
 
 echo "Uploading the public key (Maven Central checks it there)..."
-gpg --keyserver keyserver.ubuntu.com --send-keys "$FPR"
+gpg --keyserver hkps://keyserver.ubuntu.com --send-keys "$FPR"
 
 SECRET=$(gpg --batch --pinentry-mode loopback --passphrase "$PASS" \
   --export-secret-keys --armor "$FPR" | grep -v '\-\-' | grep -v '^=.' | tr -d '\n')

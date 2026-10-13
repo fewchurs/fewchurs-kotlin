@@ -108,7 +108,7 @@ The group ID is `shop.fewchurs`. The Maven Central namespace is verified through
    ```bash
    gpg --full-generate-key
    gpg --list-secret-keys --keyid-format SHORT
-   gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
+   gpg --keyserver hkps://keyserver.ubuntu.com --send-keys <KEY_ID>
    ```
    Get the secret key as one line for the next step:
    ```bash
