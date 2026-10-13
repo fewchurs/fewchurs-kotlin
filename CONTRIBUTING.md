@@ -95,6 +95,55 @@ For a local Next.js dev server, use `http://10.0.2.2:3000/api/v1`. Reinstall the
 
 This builds a minified APK to confirm the consumer R8 rules still work. Each AAR in `*/build/outputs/aar/` should stay under 300 KB.
 
+## Publishing a release
+
+The group ID is `shop.fewchurs`. The Maven Central namespace is verified through a DNS TXT record on `fewchurs.shop`.
+
+### One-time setup
+
+1. Sign in at [central.sonatype.com](https://central.sonatype.com) and add the namespace `shop.fewchurs`. Add the TXT record it shows to the `fewchurs.shop` DNS, then press **Verify**.
+2. Under **Account → Generate User Token**, create a token.
+3. Create a signing key and upload its public half:
+   ```bash
+   gpg --full-generate-key
+   gpg --list-secret-keys --keyid-format SHORT
+   gpg --keyserver keyserver.ubuntu.com --send-keys <KEY_ID>
+   ```
+   Get the secret key as one line for the next step:
+   ```bash
+   gpg --export-secret-keys --armor <KEY_ID> | grep -v '\-\-' | grep -v '^=.' | tr -d '\n'
+   ```
+4. Put the credentials in `~/.gradle/gradle.properties`. Never put them in this repo.
+   ```properties
+   mavenCentralUsername=<token username>
+   mavenCentralPassword=<token password>
+   signingInMemoryKey=<the one-line secret key>
+   signingInMemoryKeyId=<last 8 characters of the key ID>
+   signingInMemoryKeyPassword=<key passphrase>
+   ```
+   On CI, use the env vars `ORG_GRADLE_PROJECT_mavenCentralUsername`, `ORG_GRADLE_PROJECT_signingInMemoryKey` and so on.
+
+### Each release
+
+1. Set `VERSION_NAME` in `gradle.properties`, and update `CHANGELOG.md` and the version in `README.md`.
+2. Check that it builds and installs locally:
+   ```bash
+   ./gradlew test :sample:assembleRelease
+   ./gradlew publishToMavenLocal
+   ```
+   The artifacts land in `~/.m2/repository/shop/fewchurs/`.
+3. Upload to Maven Central:
+   ```bash
+   ./gradlew publishToMavenCentral
+   ```
+   The deployment waits at [central.sonatype.com/publishing](https://central.sonatype.com/publishing). Check it, then press **Publish**. It takes 10–30 minutes to appear on Maven Central.
+4. Tag the release and push the tag. JitPack builds it the first time someone requests it.
+   ```bash
+   git tag 1.0.0
+   git push origin 1.0.0
+   ```
+   The tag must match `VERSION_NAME`, without a `v` prefix.
+
 ## Known server dependencies
 
 The SDK works with today's `/api/v1` and picks up these server changes automatically once they ship:

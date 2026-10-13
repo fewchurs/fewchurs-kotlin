@@ -55,28 +55,74 @@ The SDK comes in two artifacts:
 
 | Artifact | Use it when |
 |---|---|
-| `com.fewchurs:fewchurs-android` | You want the ready-made board (most apps). It includes `fewchurs-core`. |
-| `com.fewchurs:fewchurs-core` | You want only the API client and state holders to build a fully custom UI, without Compose. |
+| `shop.fewchurs:fewchurs-android` | You want the ready-made board (most apps). It includes `fewchurs-core`. |
+| `shop.fewchurs:fewchurs-core` | You want only the API client and state holders to build a fully custom UI, without Compose. |
+
+The SDK is on Maven Central, which every Android project already has in its repositories. Add one line:
 
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.fewchurs:fewchurs-android:1.0.0")
+    implementation("shop.fewchurs:fewchurs-android:1.0.0")
 }
 ```
 
-> **Not on Maven Central yet.** Until the 1.0.0 release is published, you can use the SDK straight from source:
->
-> ```bash
-> git clone https://github.com/fewchurs/fewchurs-kotlin.git
-> ```
->
-> ```kotlin
-> // settings.gradle.kts of your app
-> includeBuild("../fewchurs-kotlin")
-> ```
->
-> Keep the same `implementation("com.fewchurs:fewchurs-android:1.0.0")` line. Gradle swaps in the local source automatically.
+Using a version catalog:
+
+```toml
+# gradle/libs.versions.toml
+[libraries]
+fewchurs = { module = "shop.fewchurs:fewchurs-android", version = "1.0.0" }
+```
+
+```kotlin
+// app/build.gradle.kts
+dependencies {
+    implementation(libs.fewchurs)
+}
+```
+
+Kotlin Multiplatform projects: the SDK is Android-only, so add it to `androidMain.dependencies { }`, not `commonMain`. On iOS, use the [Swift package](https://github.com/fewchurs/fewchurs-swift).
+
+<details>
+<summary>Installing from JitPack instead</summary>
+
+Every git tag is also built on JitPack. Add the repository:
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+```
+
+Then use the JitPack coordinates:
+
+```kotlin
+implementation("com.github.fewchurs.fewchurs-kotlin:fewchurs-android:1.0.0")
+```
+
+Don't mix the two: use either the `shop.fewchurs` or the `com.github.fewchurs.fewchurs-kotlin` coordinates in one app, not both.
+</details>
+
+<details>
+<summary>Building from source</summary>
+
+```bash
+git clone https://github.com/fewchurs/fewchurs-kotlin.git
+```
+
+```kotlin
+// settings.gradle.kts of your app
+includeBuild("../fewchurs-kotlin")
+```
+
+Keep the same `implementation("shop.fewchurs:fewchurs-android:1.0.0")` line. Gradle swaps in the local source automatically.
+</details>
 
 ---
 

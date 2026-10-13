@@ -2,7 +2,7 @@
 
 ## 1.0.0 (unreleased)
 
-First release.
+First release, published to Maven Central as `shop.fewchurs:fewchurs-android` and `shop.fewchurs:fewchurs-core`, and on JitPack.
 
 - `FewchursBoard`, `FewchursBoardSheet` and `Fewchurs.showBoard(context)`: list, detail, voting, comments, follow and submit.
 - Setup through a manifest `meta-data` entry or `Fewchurs.configure { }`.
