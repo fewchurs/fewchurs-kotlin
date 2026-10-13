@@ -103,7 +103,8 @@ The group ID is `shop.fewchurs`. The Maven Central namespace is verified through
 
 1. Sign in at [central.sonatype.com](https://central.sonatype.com) and add the namespace `shop.fewchurs`. Add the TXT record it shows to the `fewchurs.shop` DNS, then press **Verify**.
 2. Under **Account → Generate User Token**, create a token.
-3. Create a signing key and upload its public half:
+3. Run `./tools/setup-publishing.sh`. It asks for the token, then does steps 4 and 5 for you. To do them by hand instead:
+4. Create a signing key and upload its public half:
    ```bash
    gpg --full-generate-key
    gpg --list-secret-keys --keyid-format SHORT
@@ -113,7 +114,7 @@ The group ID is `shop.fewchurs`. The Maven Central namespace is verified through
    ```bash
    gpg --export-secret-keys --armor <KEY_ID> | grep -v '\-\-' | grep -v '^=.' | tr -d '\n'
    ```
-4. Put the credentials in `~/.gradle/gradle.properties`. Never put them in this repo.
+5. Put the credentials in `~/.gradle/gradle.properties`. Never put them in this repo.
    ```properties
    mavenCentralUsername=<token username>
    mavenCentralPassword=<token password>
