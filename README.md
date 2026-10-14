@@ -421,7 +421,11 @@ Skip the Fewchurs UI entirely. See [Headless API](#headless-api-build-your-own-u
 
 ### The "Powered by Fewchurs" badge
 
-The badge appears at the end of the list on the Free and Starter plans. It's controlled by your plan on the server, so there's no option to hide it in code. Upgrading to **Pro** removes it automatically, the same as on iOS.
+The badge appears at the end of the list on the Free plan. It's controlled by your plan on the server, so there's no option to hide it in code. Upgrading to **Starter** or **Pro** removes it automatically, the same as on iOS.
+
+### How many requests the board lists
+
+Your plan decides this on the server: the board shows an app's first 5 requests on Free, its first 200 on Starter, and all of them on Pro. No code or SDK update is involved. Newer requests are still saved and appear in your dashboard. A request a user just submitted shows on their board straight away, but once the app is over its limit it leaves the list on the next refresh. They can still open it with `Fewchurs.featureDetailState`.
 
 ---
 
@@ -563,7 +567,7 @@ Every failure is a `FewchursException`. Its `userMessage` is safe to show to end
 | `InvalidApiKey` | The key is wrong or was revoked. Also logged to Logcat. | Something went wrong. Try again. |
 | `Validation(message)` | Input was rejected | The specific reason |
 | `RateLimited` | The daily per-device limit was reached | You've reached today's limit. Try again tomorrow. |
-| `LimitReached` | The board's plan limit was reached | This board isn't accepting requests right now. |
+| `LimitReached` | The server turned the request away because of the account. Plans don't block new requests, so this should be rare. | This board isn't accepting requests right now. |
 | `NotFound` | The request was deleted | This request no longer exists. |
 | `Network` | Offline, timeout or DNS failure | You're offline. |
 | `Server(statusCode)` | Fewchurs returned 5xx | Something went wrong. Try again. |
