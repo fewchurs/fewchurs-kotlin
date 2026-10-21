@@ -43,7 +43,7 @@ subprojects {
                     developer {
                         id.set("fewchurs")
                         name.set("Fewchurs")
-                        url.set("https://www.fewchurs.shop")
+                        url.set("https://www.fewchurs.com")
                     }
                 }
                 scm {

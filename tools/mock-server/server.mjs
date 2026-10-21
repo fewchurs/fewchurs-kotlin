@@ -1,4 +1,4 @@
-// Local stand-in for https://www.fewchurs.shop/api/v1 so the SDK can be tested with no account.
+// Local stand-in for https://www.fewchurs.com/api/v1 so the SDK can be tested with no account.
 // Mirrors the real routes, validation rules, error envelope and rate limits. Data is in memory.
 //
 //   node tools/mock-server/server.mjs            # port 4010

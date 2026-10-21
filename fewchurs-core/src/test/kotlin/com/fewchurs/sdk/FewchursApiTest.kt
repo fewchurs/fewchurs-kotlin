@@ -159,6 +159,6 @@ class FewchursApiTest {
     }
 
     @Test fun `default base URL is the production API`() {
-        assertEquals("https://www.fewchurs.shop/api/v1", FewchursConfig.DEFAULT_BASE_URL)
+        assertEquals("https://www.fewchurs.com/api/v1", FewchursConfig.DEFAULT_BASE_URL)
     }
 }

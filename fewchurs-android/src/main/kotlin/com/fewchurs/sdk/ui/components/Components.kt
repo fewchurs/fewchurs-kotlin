@@ -170,7 +170,7 @@ public fun PoweredByBadge(modifier: Modifier = Modifier) {
             color = FewchursTheme.colors.muted,
             modifier = Modifier
                 .clip(FewchursTheme.shapes.chip)
-                .clickable(role = Role.Button) { runCatching { uri.openUri("https://www.fewchurs.shop") } }
+                .clickable(role = Role.Button) { runCatching { uri.openUri("https://www.fewchurs.com") } }
                 .padding(horizontal = 12.dp, vertical = 12.dp),
         )
     }

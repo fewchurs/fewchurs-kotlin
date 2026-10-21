@@ -45,7 +45,7 @@ FewchursBoard()
 | Kotlin | 2.0+ |
 | UI | Jetpack Compose with Material 3. View-based apps can use `Fewchurs.showBoard(context)` instead. |
 | Permissions | `INTERNET`, which is added for you |
-| Account | A Fewchurs app and API key from your dashboard at [fewchurs.shop](https://www.fewchurs.shop) |
+| Account | A Fewchurs app and API key from your dashboard at [fewchurs.com](https://www.fewchurs.com) |
 
 ---
 
@@ -165,7 +165,7 @@ If you use both options, the code configuration wins.
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `baseUrl` | `String` | `https://www.fewchurs.shop/api/v1` | API server. Change it for staging or a local server. |
+| `baseUrl` | `String` | `https://www.fewchurs.com/api/v1` | API server. Change it for staging or a local server. |
 | `logLevel` | `LogLevel` | `Error` | `None`, `Error` or `Debug`. `Debug` logs every request to Logcat under the tag `Fewchurs`. The API key is never logged. |
 | `isSubscriber` | `() -> Boolean` | `false` | Marks requests from paying users in your dashboard. |
 | `userEmail` | `() -> String?` | `null` | Prefills the email when a user follows or submits a request. |
