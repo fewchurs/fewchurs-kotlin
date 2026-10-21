@@ -97,11 +97,11 @@ This builds a minified APK to confirm the consumer R8 rules still work. Each AAR
 
 ## Publishing a release
 
-The group ID is `shop.fewchurs`. The Maven Central namespace is verified through a DNS TXT record on `fewchurs.shop`.
+The group ID is `com.fewchurs`. The Maven Central namespace is verified through a DNS TXT record on `fewchurs.com`. Version 1.0.0 was published as `shop.fewchurs`; don't publish there again.
 
 ### One-time setup
 
-1. Sign in at [central.sonatype.com](https://central.sonatype.com) and add the namespace `shop.fewchurs`. Add the TXT record it shows to the `fewchurs.shop` DNS, then press **Verify**.
+1. Sign in at [central.sonatype.com](https://central.sonatype.com) and add the namespace `com.fewchurs`. Add the TXT record it shows to the `fewchurs.com` DNS, then press **Verify**.
 2. Under **Account → Generate User Token**, create a token.
 3. Run `./tools/setup-publishing.sh`. It asks for the token, then does steps 4 and 5 for you. To do them by hand instead:
 4. Create a signing key and upload its public half:
@@ -132,7 +132,7 @@ The group ID is `shop.fewchurs`. The Maven Central namespace is verified through
    ./gradlew test :sample:assembleRelease
    ./gradlew publishToMavenLocal
    ```
-   The artifacts land in `~/.m2/repository/shop/fewchurs/`.
+   The artifacts land in `~/.m2/repository/com/fewchurs/`.
 3. Upload to Maven Central:
    ```bash
    ./gradlew publishToMavenCentral

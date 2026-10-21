@@ -14,7 +14,7 @@ plugins {
 val onJitPack = System.getenv("JITPACK") == "true"
 
 allprojects {
-    group = if (onJitPack) "com.github.fewchurs.fewchurs-kotlin" else "shop.fewchurs"
+    group = if (onJitPack) "com.github.fewchurs.fewchurs-kotlin" else "com.fewchurs"
     version = providers.gradleProperty("VERSION_NAME").get()
 }
 

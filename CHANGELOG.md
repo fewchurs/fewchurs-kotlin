@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (unreleased)
+
+- The group ID is now `com.fewchurs`: use `com.fewchurs:fewchurs-android` and `com.fewchurs:fewchurs-core`. 1.0.0 stays available as `shop.fewchurs`.
+- The default API server is now `https://www.fewchurs.com/api/v1`.
+
 ## 1.0.0 (unreleased)
 
 First release, published to Maven Central as `shop.fewchurs:fewchurs-android` and `shop.fewchurs:fewchurs-core`, and on JitPack.

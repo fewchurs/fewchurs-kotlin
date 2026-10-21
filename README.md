@@ -55,24 +55,26 @@ The SDK comes in two artifacts:
 
 | Artifact | Use it when |
 |---|---|
-| `shop.fewchurs:fewchurs-android` | You want the ready-made board (most apps). It includes `fewchurs-core`. |
-| `shop.fewchurs:fewchurs-core` | You want only the API client and state holders to build a fully custom UI, without Compose. |
+| `com.fewchurs:fewchurs-android` | You want the ready-made board (most apps). It includes `fewchurs-core`. |
+| `com.fewchurs:fewchurs-core` | You want only the API client and state holders to build a fully custom UI, without Compose. |
 
 The SDK is on Maven Central, which every Android project already has in its repositories. Add one line:
 
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("shop.fewchurs:fewchurs-android:1.0.0")
+    implementation("com.fewchurs:fewchurs-android:1.0.1")
 }
 ```
+
+Upgrading from 1.0.0? It was published as `shop.fewchurs`. Change the group in your dependency line to `com.fewchurs`; nothing else changes.
 
 Using a version catalog:
 
 ```toml
 # gradle/libs.versions.toml
 [libraries]
-fewchurs = { module = "shop.fewchurs:fewchurs-android", version = "1.0.0" }
+fewchurs = { module = "com.fewchurs:fewchurs-android", version = "1.0.1" }
 ```
 
 ```kotlin
@@ -103,10 +105,10 @@ dependencyResolutionManagement {
 Then use the JitPack coordinates:
 
 ```kotlin
-implementation("com.github.fewchurs.fewchurs-kotlin:fewchurs-android:1.0.0")
+implementation("com.github.fewchurs.fewchurs-kotlin:fewchurs-android:1.0.1")
 ```
 
-Don't mix the two: use either the `shop.fewchurs` or the `com.github.fewchurs.fewchurs-kotlin` coordinates in one app, not both.
+Don't mix the two: use either the `com.fewchurs` or the `com.github.fewchurs.fewchurs-kotlin` coordinates in one app, not both.
 </details>
 
 <details>
@@ -121,7 +123,7 @@ git clone https://github.com/fewchurs/fewchurs-kotlin.git
 includeBuild("../fewchurs-kotlin")
 ```
 
-Keep the same `implementation("shop.fewchurs:fewchurs-android:1.0.0")` line. Gradle swaps in the local source automatically.
+Keep the same `implementation("com.fewchurs:fewchurs-android:1.0.1")` line. Gradle swaps in the local source automatically.
 </details>
 
 ---
