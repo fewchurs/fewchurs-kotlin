@@ -160,7 +160,7 @@ internal class FewchursApi(
         val error = runCatching { json.decodeFromString(ErrorEnvelope.serializer(), body).error }.getOrNull()
         val message = error?.message ?: "HTTP $status"
         val mapped = when (error?.code) {
-            "invalid_key" -> FewchursException.InvalidApiKey()
+            "invalid_key", "unauthorized" -> FewchursException.InvalidApiKey()
             "missing_device_id" -> FewchursException.Internal("Server did not receive a device ID: $message")
             "validation_failed" -> FewchursException.Validation(message)
             "rate_limited" -> FewchursException.RateLimited()

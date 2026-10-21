@@ -4,6 +4,7 @@
 
 - The group ID is now `com.fewchurs`: use `com.fewchurs:fewchurs-android` and `com.fewchurs:fewchurs-core`. 1.0.0 stays available as `shop.fewchurs`.
 - The default API server is now `https://www.fewchurs.com/api/v1`.
+- A wrong or revoked API key now shows an "Invalid API key" screen that says where to find the key, instead of a generic error. `unauthorized` responses map to `FewchursException.InvalidApiKey` too.
 
 ## 1.0.0 (unreleased)
 

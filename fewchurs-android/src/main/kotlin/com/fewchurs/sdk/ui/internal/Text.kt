@@ -17,6 +17,7 @@ internal fun FewchursException.localized(): String = when (this) {
     is FewchursException.RateLimited -> stringResource(R.string.fewchurs_error_rate_limited)
     is FewchursException.LimitReached -> stringResource(R.string.fewchurs_error_limit_reached)
     is FewchursException.NotFound -> stringResource(R.string.fewchurs_error_not_found)
+    is FewchursException.InvalidApiKey -> stringResource(R.string.fewchurs_error_invalid_key)
     is FewchursException.Validation -> userMessage
     is FewchursException.NotConfigured -> stringResource(R.string.fewchurs_not_configured_title)
     else -> stringResource(R.string.fewchurs_error_generic)

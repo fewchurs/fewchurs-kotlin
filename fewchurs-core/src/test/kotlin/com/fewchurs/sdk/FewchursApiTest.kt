@@ -85,6 +85,19 @@ class FewchursApiTest {
         }
     }
 
+    @Test fun `invalid key tells the user the key is invalid`() = runTest {
+        for (code in listOf("invalid_key", "unauthorized")) {
+            server.enqueue(error(code, 401))
+            try {
+                server.api().listFeatures("top", 20, null)
+                fail("expected InvalidApiKey for $code")
+            } catch (e: FewchursException.InvalidApiKey) {
+                assertEquals("Invalid API key. Check the key in your Fewchurs dashboard.", e.userMessage)
+            }
+        }
+        assertEquals("never retried", 2, server.requestCount)
+    }
+
     @Test fun `validation error keeps server message`() = runTest {
         server.enqueue(error("validation_failed", 400, "Title too short"))
         try {

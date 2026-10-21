@@ -78,6 +78,9 @@
     <string name="fewchurs_error_rate_limited">You\'ve reached today\'s limit. Try again tomorrow.</string>
     <string name="fewchurs_error_limit_reached">This board isn\'t accepting requests right now.</string>
     <string name="fewchurs_error_not_found">This request no longer exists.</string>
+    <string name="fewchurs_error_invalid_key">Invalid API key. Check the key in your Fewchurs dashboard.</string>
+    <string name="fewchurs_invalid_key_title">Invalid API key</string>
+    <string name="fewchurs_invalid_key_message">Copy the key from your Fewchurs dashboard (Apps → API keys) and pass it to Fewchurs.configure, or set the com.fewchurs.sdk.API_KEY meta-data.</string>
     <string name="fewchurs_not_configured_title">Fewchurs isn\'t set up</string>
     <string name="fewchurs_not_configured_message">Call Fewchurs.configure(context, apiKey) in Application.onCreate, or add the com.fewchurs.sdk.API_KEY meta-data to AndroidManifest.xml.</string>
 </resources>

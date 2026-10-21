@@ -272,10 +272,16 @@ private fun ErrorContent(error: FewchursException, onRetry: () -> Unit) {
     // Wrapped in a list so pull-to-refresh also works from the error state.
     LazyColumn(Modifier.fillMaxSize()) {
         item {
-            val offline = error is FewchursException.Network
+            val (title, message) = when (error) {
+                is FewchursException.Network ->
+                    stringResource(R.string.fewchurs_offline_title) to stringResource(R.string.fewchurs_offline_message)
+                is FewchursException.InvalidApiKey ->
+                    stringResource(R.string.fewchurs_invalid_key_title) to stringResource(R.string.fewchurs_invalid_key_message)
+                else -> stringResource(R.string.fewchurs_error_title) to error.localized()
+            }
             MessageState(
-                title = stringResource(if (offline) R.string.fewchurs_offline_title else R.string.fewchurs_error_title),
-                message = if (offline) stringResource(R.string.fewchurs_offline_message) else error.localized(),
+                title = title,
+                message = message,
                 actionLabel = stringResource(R.string.fewchurs_retry),
                 onAction = onRetry,
             )

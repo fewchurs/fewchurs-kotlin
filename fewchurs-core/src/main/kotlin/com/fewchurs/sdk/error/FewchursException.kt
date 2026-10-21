@@ -18,7 +18,10 @@ public sealed class FewchursException(
     )
 
     /** The API key is wrong or was revoked. Developer error. */
-    public class InvalidApiKey : FewchursException("Invalid or inactive Fewchurs API key.", GENERIC)
+    public class InvalidApiKey : FewchursException(
+        "Invalid or inactive Fewchurs API key.",
+        "Invalid API key. Check the key in your Fewchurs dashboard.",
+    )
 
     /** Input was rejected. [message] comes from the server or client-side validation. */
     public class Validation(message: String) : FewchursException(message, message)
