@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 (unreleased)
+
+- Sends the app ID so your API key only works in your own apps. Handles `wrong_app`.
+
 ## 1.0.1 (unreleased)
 
 - The group ID is now `com.fewchurs`: use `com.fewchurs:fewchurs-android` and `com.fewchurs:fewchurs-core`. 1.0.0 stays available as `shop.fewchurs`.

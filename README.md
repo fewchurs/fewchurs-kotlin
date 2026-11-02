@@ -63,7 +63,7 @@ The SDK is on Maven Central, which every Android project already has in its repo
 ```kotlin
 // app/build.gradle.kts
 dependencies {
-    implementation("com.fewchurs:fewchurs-android:1.0.1")
+    implementation("com.fewchurs:fewchurs-android:1.1.0")
 }
 ```
 
@@ -74,7 +74,7 @@ Using a version catalog:
 ```toml
 # gradle/libs.versions.toml
 [libraries]
-fewchurs = { module = "com.fewchurs:fewchurs-android", version = "1.0.1" }
+fewchurs = { module = "com.fewchurs:fewchurs-android", version = "1.1.0" }
 ```
 
 ```kotlin
@@ -105,7 +105,7 @@ dependencyResolutionManagement {
 Then use the JitPack coordinates:
 
 ```kotlin
-implementation("com.github.fewchurs.fewchurs-kotlin:fewchurs-android:1.0.1")
+implementation("com.github.fewchurs.fewchurs-kotlin:fewchurs-android:1.1.0")
 ```
 
 Don't mix the two: use either the `com.fewchurs` or the `com.github.fewchurs.fewchurs-kotlin` coordinates in one app, not both.
@@ -123,7 +123,7 @@ git clone https://github.com/fewchurs/fewchurs-kotlin.git
 includeBuild("../fewchurs-kotlin")
 ```
 
-Keep the same `implementation("com.fewchurs:fewchurs-android:1.0.1")` line. Gradle swaps in the local source automatically.
+Keep the same `implementation("com.fewchurs:fewchurs-android:1.1.0")` line. Gradle swaps in the local source automatically.
 </details>
 
 ---
@@ -131,6 +131,8 @@ Keep the same `implementation("com.fewchurs:fewchurs-android:1.0.1")` line. Grad
 ## Setup
 
 Get your API key from the Fewchurs dashboard (**Apps → API keys**). Keys start with `fr_live_`. Then choose one of the two options below.
+
+Add your package name (`applicationId`) to your app in the Fewchurs dashboard. The API key only works there. Debug builds with an `applicationIdSuffix`, such as `com.company.app.debug`, work too.
 
 ### Option A: zero code (manifest)
 
@@ -566,7 +568,7 @@ Every failure is a `FewchursException`. Its `userMessage` is safe to show to end
 | Exception | When | Default `userMessage` |
 |---|---|---|
 | `NotConfigured` | `configure` was never called and there's no manifest key | Something went wrong. Try again. |
-| `InvalidApiKey` | The key is wrong or was revoked. Also logged to Logcat. | Something went wrong. Try again. |
+| `InvalidApiKey` | The key is wrong or was revoked (`invalid_key`), or your package name isn't added to the app in the dashboard (`wrong_app`). Its `message` says which; it's also logged to Logcat. | Invalid API key. Check the key in your Fewchurs dashboard. |
 | `Validation(message)` | Input was rejected | The specific reason |
 | `RateLimited` | The daily per-device limit was reached | You've reached today's limit. Try again tomorrow. |
 | `LimitReached` | The server turned the request away because of the account. Plans don't block new requests, so this should be rare. | This board isn't accepting requests right now. |
@@ -614,6 +616,7 @@ All traffic uses HTTPS. The SDK never reads `ANDROID_ID`, the advertising ID, co
 ## Security
 
 - **The API key is publishable.** It ships inside your APK and can be extracted, just like a Firebase or Stripe publishable key. It can only read your board and create votes, comments and requests. It can't access your dashboard or change settings.
+- The key only works from the package names you add to your app in the dashboard. The SDK sends your package name with every request, so a key copied out of your APK doesn't work in other apps that use the SDK.
 - Abuse protection runs on the server: per-device daily limits, with more hardening on the way.
 - Don't use a secret or admin credential with this SDK.
 - To rotate a key, create a new one in the dashboard, ship an app update, then revoke the old one.
@@ -633,7 +636,7 @@ You don't need to do anything. The SDK ships consumer rules that are applied aut
 
 **"Couldn't load requests" on every open.**
 Set `logLevel = LogLevel.Debug` and filter Logcat by `Fewchurs`.
-- An `InvalidApiKey` error means the key is wrong or revoked.
+- An `InvalidApiKey` error means the key is wrong or revoked, or your package name isn't added to the app in the dashboard. The logged message names the package name to add.
 - A `Network` error means there's no connection or the `baseUrl` is wrong.
 
 **My votes disappeared after reinstalling.**

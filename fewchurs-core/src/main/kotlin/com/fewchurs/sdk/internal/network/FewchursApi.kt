@@ -27,8 +27,10 @@ import kotlin.coroutines.resumeWithException
 internal class FewchursApi(
     baseUrl: String,
     private val apiKey: String,
+    private val appId: String,
     private val deviceId: () -> String,
     private val userAgent: String,
+    private val sdk: String,
     private val acceptLanguage: () -> String,
     private val logger: Logger,
     httpClient: OkHttpClient? = null,
@@ -109,6 +111,8 @@ internal class FewchursApi(
         .url(url)
         .header("Authorization", "Bearer $apiKey")
         .header("X-Device-Id", deviceId())
+        .header("X-Fewchurs-App-Id", appId)
+        .header("X-Fewchurs-Sdk", sdk)
         .header("User-Agent", userAgent)
         .header("Accept-Language", acceptLanguage())
         .header("Accept", "application/json")
@@ -160,7 +164,7 @@ internal class FewchursApi(
         val error = runCatching { json.decodeFromString(ErrorEnvelope.serializer(), body).error }.getOrNull()
         val message = error?.message ?: "HTTP $status"
         val mapped = when (error?.code) {
-            "invalid_key", "unauthorized" -> FewchursException.InvalidApiKey()
+            "invalid_key", "unauthorized", "wrong_app" -> FewchursException.InvalidApiKey(message)
             "missing_device_id" -> FewchursException.Internal("Server did not receive a device ID: $message")
             "validation_failed" -> FewchursException.Validation(message)
             "rate_limited" -> FewchursException.RateLimited()
@@ -177,7 +181,9 @@ internal class FewchursApi(
                 else -> FewchursException.Unknown("Unexpected HTTP $status: $message")
             }
         }
-        if (mapped is FewchursException.InvalidApiKey) {
+        if (error?.code == "wrong_app") {
+            logger.error(message)
+        } else if (mapped is FewchursException.InvalidApiKey) {
             logger.error("Fewchurs rejected the API key. Check the key in your dashboard (Apps → API keys).")
         }
         return mapped

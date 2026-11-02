@@ -9,12 +9,15 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 
 internal const val DEVICE = "device-123"
+internal const val APP_ID = "com.company.app"
 
 internal fun MockWebServer.api(): FewchursApi = FewchursApi(
     baseUrl = url("/api/v1").toString(),
     apiKey = "fr_test_key",
+    appId = APP_ID,
     deviceId = { DEVICE },
     userAgent = "Fewchurs-Android/test",
+    sdk = "kotlin/test",
     acceptLanguage = { "en-US" },
     logger = Logger(LogLevel.None),
     retryBaseDelayMs = 1,

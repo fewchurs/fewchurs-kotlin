@@ -1,6 +1,7 @@
 package com.fewchurs.sdk
 
 import com.fewchurs.sdk.error.FewchursException
+import com.fewchurs.sdk.internal.network.CreateCommentBody
 import com.fewchurs.sdk.internal.network.CreateFeatureBody
 import com.fewchurs.sdk.internal.network.IsoDate
 import kotlinx.coroutines.test.runTest
@@ -30,6 +31,33 @@ class FewchursApiTest {
         assertEquals("Fewchurs-Android/test", request.getHeader("User-Agent"))
         assertEquals("en-US", request.getHeader("Accept-Language"))
         assertEquals("/api/v1/features?sort=top&limit=20", request.path)
+    }
+
+    @Test fun `sends app ID and SDK headers on every endpoint`() = runTest {
+        val api = server.api()
+        server.enqueue(json("""{"showBranding":true}"""))
+        server.enqueue(featurePage())
+        server.enqueue(json(feature("f")))
+        server.enqueue(json(feature("f"), 201))
+        server.enqueue(json("""{"upvoteCount":1,"hasVoted":true}"""))
+        server.enqueue(json("""{"following":true}"""))
+        server.enqueue(json("""{"following":false}"""))
+        server.enqueue(commentPage())
+        server.enqueue(json(comment("c"), 201))
+        api.config()
+        api.listFeatures("top", 20, null)
+        api.getFeature("f")
+        api.createFeature(CreateFeatureBody("Dark mode", ""))
+        api.setVote("f", true)
+        api.follow("f", "a@b.com")
+        api.unfollow("f")
+        api.listComments("f", 20, null)
+        api.createComment(CreateCommentBody("f", "Nice"))
+        repeat(9) {
+            val request = server.takeRequest()
+            assertEquals(request.path, APP_ID, request.getHeader("X-Fewchurs-App-Id"))
+            assertEquals(request.path, "kotlin/test", request.getHeader("X-Fewchurs-Sdk"))
+        }
     }
 
     @Test fun `passes cursor and clamps limit`() = runTest {
@@ -67,6 +95,7 @@ class FewchursApiTest {
     @Test fun `maps error envelope codes`() = runTest {
         val cases = listOf(
             error("invalid_key", 401) to FewchursException.InvalidApiKey::class,
+            error("wrong_app", 403) to FewchursException.InvalidApiKey::class,
             error("validation_failed", 400, "Title too short") to FewchursException.Validation::class,
             error("rate_limited", 429) to FewchursException.RateLimited::class,
             error("limit_reached", 402) to FewchursException.LimitReached::class,
@@ -96,6 +125,19 @@ class FewchursApiTest {
             }
         }
         assertEquals("never retried", 2, server.requestCount)
+    }
+
+    @Test fun `wrong app is an invalid key, keeps the server message and is never retried`() = runTest {
+        val message = "This API key is not set up for com.other.app. Add it to your app in the Fewchurs dashboard."
+        server.enqueue(error("wrong_app", 403, message))
+        try {
+            server.api().listFeatures("top", 20, null)
+            fail("expected InvalidApiKey")
+        } catch (e: FewchursException.InvalidApiKey) {
+            assertEquals(message, e.message)
+            assertEquals("Invalid API key. Check the key in your Fewchurs dashboard.", e.userMessage)
+        }
+        assertEquals(1, server.requestCount)
     }
 
     @Test fun `validation error keeps server message`() = runTest {

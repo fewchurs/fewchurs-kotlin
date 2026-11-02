@@ -76,8 +76,10 @@ public object Fewchurs {
         val api = FewchursApi(
             baseUrl = config.baseUrl,
             apiKey = config.apiKey,
+            appId = appContext.packageName,
             deviceId = identity::current,
             userAgent = userAgent(appContext),
+            sdk = "kotlin/${com.fewchurs.sdk.core.BuildConfig.VERSION_NAME}",
             acceptLanguage = { Locale.getDefault().toLanguageTag() },
             logger = logger,
         )
