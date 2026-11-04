@@ -568,7 +568,7 @@ Every failure is a `FewchursException`. Its `userMessage` is safe to show to end
 | Exception | When | Default `userMessage` |
 |---|---|---|
 | `NotConfigured` | `configure` was never called and there's no manifest key | Something went wrong. Try again. |
-| `InvalidApiKey` | The key is wrong or was revoked (`invalid_key`), or your package name isn't added to the app in the dashboard (`wrong_app`). Its `message` says which; it's also logged to Logcat. | Invalid API key. Check the key in your Fewchurs dashboard. |
+| `InvalidApiKey` | The key is wrong or was revoked (`invalid_key`), or your package name isn't added to the app in the dashboard (`wrong_app`). Its `message` says which; it's also logged to Logcat. | Invalid API key. Check the key in your Fewchurs dashboard. For `wrong_app`, the server's message, which names the ID to add. This is also on `notSetUpMessage`. |
 | `Validation(message)` | Input was rejected | The specific reason |
 | `RateLimited` | The daily per-device limit was reached | You've reached today's limit. Try again tomorrow. |
 | `LimitReached` | The server turned the request away because of the account. Plans don't block new requests, so this should be rare. | This board isn't accepting requests right now. |

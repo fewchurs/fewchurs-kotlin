@@ -276,7 +276,8 @@ private fun ErrorContent(error: FewchursException, onRetry: () -> Unit) {
                 is FewchursException.Network ->
                     stringResource(R.string.fewchurs_offline_title) to stringResource(R.string.fewchurs_offline_message)
                 is FewchursException.InvalidApiKey ->
-                    stringResource(R.string.fewchurs_invalid_key_title) to stringResource(R.string.fewchurs_invalid_key_message)
+                    stringResource(R.string.fewchurs_invalid_key_title) to
+                        (error.notSetUpMessage ?: stringResource(R.string.fewchurs_invalid_key_message))
                 else -> stringResource(R.string.fewchurs_error_title) to error.localized()
             }
             MessageState(
@@ -297,7 +298,11 @@ private fun BoardTab.labelRes(): Int = when (this) {
 
 /** Resolves error strings up front so they can be used from coroutines. */
 internal class ErrorTexts(private val map: Map<Class<*>, String>, private val generic: String) {
-    fun of(e: FewchursException): String = if (e is FewchursException.Validation) e.userMessage else map[e.javaClass] ?: generic
+    fun of(e: FewchursException): String = when (e) {
+        is FewchursException.Validation -> e.userMessage
+        is FewchursException.InvalidApiKey -> e.notSetUpMessage ?: generic
+        else -> map[e.javaClass] ?: generic
+    }
 }
 
 @Composable

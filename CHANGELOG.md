@@ -3,6 +3,7 @@
 ## 1.1.0 (unreleased)
 
 - Sends the app ID so your API key only works in your own apps. Handles `wrong_app`.
+- When your package name isn't added in the dashboard, the board shows the server's message, which names the ID to add. It's also on `InvalidApiKey.notSetUpMessage` and `userMessage`.
 
 ## 1.0.1 (unreleased)
 

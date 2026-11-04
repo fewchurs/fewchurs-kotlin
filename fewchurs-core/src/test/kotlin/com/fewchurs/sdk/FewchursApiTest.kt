@@ -122,6 +122,7 @@ class FewchursApiTest {
                 fail("expected InvalidApiKey for $code")
             } catch (e: FewchursException.InvalidApiKey) {
                 assertEquals("Invalid API key. Check the key in your Fewchurs dashboard.", e.userMessage)
+                assertNull(e.notSetUpMessage)
             }
         }
         assertEquals("never retried", 2, server.requestCount)
@@ -135,7 +136,8 @@ class FewchursApiTest {
             fail("expected InvalidApiKey")
         } catch (e: FewchursException.InvalidApiKey) {
             assertEquals(message, e.message)
-            assertEquals("Invalid API key. Check the key in your Fewchurs dashboard.", e.userMessage)
+            assertEquals(message, e.notSetUpMessage)
+            assertEquals(message, e.userMessage)
         }
         assertEquals(1, server.requestCount)
     }

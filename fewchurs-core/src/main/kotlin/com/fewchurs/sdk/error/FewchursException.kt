@@ -20,10 +20,15 @@ public sealed class FewchursException(
     /**
      * The API key is wrong, was revoked, or is not set up for this app's package name.
      * [message] comes from the server when it gives one. Developer error.
+     *
+     * @property notSetUpMessage set when this app's package name isn't added in the dashboard. Names the ID to add.
      */
-    public class InvalidApiKey(message: String = "Invalid or inactive Fewchurs API key.") : FewchursException(
+    public class InvalidApiKey(
+        message: String = "Invalid or inactive Fewchurs API key.",
+        public val notSetUpMessage: String? = null,
+    ) : FewchursException(
         message,
-        "Invalid API key. Check the key in your Fewchurs dashboard.",
+        notSetUpMessage ?: "Invalid API key. Check the key in your Fewchurs dashboard.",
     )
 
     /** Input was rejected. [message] comes from the server or client-side validation. */
